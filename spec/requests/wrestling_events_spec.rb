@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe 'WrestlingEvents', type: :request do
   describe 'GET /wrestling_events' do
     it 'renders the index template' do
@@ -11,9 +12,29 @@ RSpec.describe 'WrestlingEvents', type: :request do
   end
 
   describe 'GET /wrestling_events/new' do
-    it 'renders the new template' do
-      get new_wrestling_event_path
-      expect(response).to have_http_status(200)
+    context 'when logged in' do
+      let(:user) do
+        User.create!(name: 'Test User',
+                     email: 'test@example.com',
+                     password: 'password',
+                     password_confirmation: 'password')
+      end
+
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'renders the new template' do
+        get new_wrestling_event_path
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when not logged in' do
+      it 'redirects to login path' do
+        get new_wrestling_event_path
+        expect(response).to redirect_to(login_path)
+      end
     end
   end
 
@@ -23,11 +44,6 @@ RSpec.describe 'WrestlingEvents', type: :request do
       get wrestling_event_path(wrestling_event)
       expect(response).to have_http_status(200)
       expect(response.body).to include('WrestleMania')
-    context 'when not logged in' do
-      it 'redirects to login path' do
-        get new_wrestling_event_path
-        expect(response).to redirect_to(login_path)
-      end
     end
   end
 
@@ -50,6 +66,20 @@ RSpec.describe 'WrestlingEvents', type: :request do
         end.to change(WrestlingEvent, :count).by(1)
         expect(response).to redirect_to(WrestlingEvent.last)
       end
+
+      context 'with invalid parameters' do
+        it 'does not create a new wrestling_event' do
+          expect do
+            post wrestling_events_path, params: { wrestling_event: { title: nil } }
+          end.not_to change(WrestlingEvent, :count)
+        end
+
+        it 'renders the new template' do
+          post wrestling_events_path, params: { wrestling_event: { title: nil } }
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response.body).to include('New Wrestling Event')
+        end
+      end
     end
 
     context 'when not logged in' do
@@ -64,19 +94,6 @@ RSpec.describe 'WrestlingEvents', type: :request do
         end.not_to change(WrestlingEvent, :count)
       end
     end
-
-    context 'with invalid parameters' do
-      it 'does not create a new wrestling_event' do
-        expect do
-          post wrestling_events_path, params: { wrestling_event: { title: nil } }
-        end.not_to change(WrestlingEvent, :count)
-      end
-
-      it 'renders the new template' do
-        post wrestling_events_path, params: { wrestling_event: { title: nil } }
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include('New Wrestling Event')
-      end
-    end
   end
 end
+# rubocop:enable Metrics/BlockLength
