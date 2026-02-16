@@ -56,4 +56,14 @@ RSpec.describe 'Albums', type: :request do
       end
     end
   end
+
+  describe 'GET /albums/:id' do
+    let!(:album) { Album.create!(title: 'Test Album', artist: 'Test Artist') }
+
+    it 'returns http success' do
+      get album_path(album)
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include('Test Album')
+    end
+  end
 end
