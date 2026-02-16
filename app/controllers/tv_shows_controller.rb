@@ -14,7 +14,7 @@ class TvShowsController < ApplicationController
     if @tv_show.save
       redirect_to @tv_show
     else
-      render :new
+      render :new, status: :unprocessable_content
     end
   end
 
