@@ -13,6 +13,8 @@ require 'securerandom'
 
 def secure_token
   token_file = Rails.root.join('.secret')
+  return ENV['SECRET_KEY_BASE'] if ENV['SECRET_KEY_BASE']
+
   if File.exist?(token_file)
     # Use the existing token.
     File.read(token_file).chomp
@@ -24,4 +26,9 @@ def secure_token
   end
 end
 
-SampleApp::Application.config.secret_key_base = secure_token
+SampleApp::Application.config.secret_key_base = ENV.fetch('SECRET_KEY_BASE') do
+  if Rails.env.production? && !File.exist?(Rails.root.join('.secret'))
+    raise "Secret key base must be set in production via SECRET_KEY_BASE environment variable."
+  end
+  secure_token
+end
