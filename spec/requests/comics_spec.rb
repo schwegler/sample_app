@@ -18,6 +18,21 @@ RSpec.describe 'Comics', type: :request do
         expect(response).to redirect_to(login_path)
       end
     end
+
+    context 'when logged in' do
+      let(:user) do
+        User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+      end
+
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'returns http success' do
+        get new_comic_path
+        expect(response).to have_http_status(:success)
+      end
+    end
   end
 
   describe 'GET /comics/:id' do
