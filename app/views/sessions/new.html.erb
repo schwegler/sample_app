@@ -1,24 +1,15 @@
-<div class="row justify-content-center">
-  <div class="col-md-6 col-lg-5">
-    <div class="card shadow-sm mt-5">
-      <div class="card-body p-4">
-        <h1 class="h3 mb-3 fw-normal text-center">Log in</h1>
-        <%= form_for(:session, url: login_path) do |f| %>
-          <div class="mb-3">
-            <%= f.label :email, class: "form-label" %>
-            <%= f.email_field :email, class: 'form-control', placeholder: "name@example.com" %>
-          </div>
+<h1>Log in</h1>
 
-          <div class="mb-3">
-            <%= f.label :password, class: "form-label" %>
-            <%= f.password_field :password, class: 'form-control', placeholder: "Password" %>
-          </div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(:session, url: login_path) do |f| %>
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
 
-          <div class="d-grid gap-2">
-            <%= f.submit "Log in", class: "btn btn-primary btn-lg" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
+      <%= f.label :password %>
+      <%= f.password_field :password, class: 'form-control' %>
+
+      <%= f.submit "Log in", class: "btn btn-primary" %>
+    <% end %>
   </div>
 </div>

@@ -24,9 +24,6 @@ gem 'irb', '1.6.2'
 gem 'psych', '5.0.1'
 gem 'rdoc', '>= 6.5.1.1'
 
-gem 'bootstrap', '~> 5.3'
-gem 'popper_js'
-
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.7'

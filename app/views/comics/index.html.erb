@@ -1,33 +1,7 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h1>Comics</h1>
-  <%= link_to 'New Comic', new_comic_path, class: "btn btn-primary" %>
-</div>
-
-<div class="table-responsive">
-  <table class="table table-striped table-hover align-middle">
-    <thead class="table-light">
-      <tr>
-        <th>Title</th>
-        <th>Issue #</th>
-        <th>Publisher</th>
-        <th>Writer</th>
-        <th>Artist</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @comics.each do |comic| %>
-        <tr>
-          <td><%= comic.title %></td>
-          <td><%= comic.issue_number %></td>
-          <td><%= comic.publisher %></td>
-          <td><%= comic.writer %></td>
-          <td><%= comic.artist %></td>
-          <td>
-            <%= link_to 'Show', comic, class: "btn btn-sm btn-outline-info" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<h1>Comics</h1>
+<%= link_to 'New Comic', new_comic_path %>
+<ul>
+  <% @comics.each do |comic| %>
+    <li><%= link_to comic.title, comic %></li>
+  <% end %>
+</ul>
