@@ -51,5 +51,4 @@ group :production do
 end
 
 gem "bcrypt", "~> 3.1"
-
 gem "image_processing", "~> 1.2"
