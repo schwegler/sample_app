@@ -88,3 +88,4 @@ RSpec.describe 'WrestlingEvents', type: :request do # rubocop:disable Metrics/Bl
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
