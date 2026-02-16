@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WrestlingEventsController < ApplicationController
   def index
     @wrestling_events = WrestlingEvent.all
