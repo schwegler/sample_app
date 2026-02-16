@@ -9,6 +9,13 @@ RSpec.describe 'User pages', type: :request do
   end
 
   describe 'index' do
+    context 'when not logged in' do
+      it 'redirects to login' do
+        get users_path
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
     context 'as non-admin user' do
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
