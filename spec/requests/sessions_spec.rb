@@ -1,8 +1,14 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+# rubocop:disable Metrics/BlockLength
 
 RSpec.describe 'Authentication', type: :request do
+  let(:user) do
+    User.create(name: 'Example User', email: 'user@example.com', password: 'password',
+                password_confirmation: 'password')
+  end
+
   describe 'login page' do
     before { get login_path }
 
@@ -16,11 +22,6 @@ RSpec.describe 'Authentication', type: :request do
   end
 
   describe 'valid login' do
-    let(:user) do
-      User.create(name: 'Example User', email: 'user@example.com', password: 'password',
-                  password_confirmation: 'password')
-    end
-
     before do
       post login_path, params: { session: { email: user.email, password: user.password } }
     end
@@ -47,11 +48,6 @@ RSpec.describe 'Authentication', type: :request do
   end
 
   describe 'logout' do
-    let(:user) do
-      User.create(name: 'Example User', email: 'user@example.com', password: 'password',
-                  password_confirmation: 'password')
-    end
-
     before do
       post login_path, params: { session: { email: user.email, password: user.password } }
       delete logout_path
@@ -65,4 +61,18 @@ RSpec.describe 'Authentication', type: :request do
       expect(session[:user_id]).to be_nil
     end
   end
+
+  describe 'session fixation' do
+    it 'rotates the session id after successful login' do
+      post login_path, params: { session: { email: 'invalid', password: 'invalid' } }
+      initial_session_id = session.id
+      expect(initial_session_id).not_to be_nil
+
+      post login_path, params: { session: { email: user.email, password: user.password } }
+
+      expect(session[:user_id]).to eq(user.id)
+      expect(session.id).not_to eq(initial_session_id)
+    end
+  end
 end
+# rubocop:enable Metrics/BlockLength

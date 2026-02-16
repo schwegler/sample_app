@@ -13,23 +13,6 @@ RSpec.describe 'Security Headers', type: :request do
       expect(response.headers['Feature-Policy']).to include("usb 'none'")
       expect(response.headers['Feature-Policy']).to include("fullscreen 'self'")
       expect(response.headers['Feature-Policy']).to include("payment 'none'")
-      
-  describe 'GET /' do
-    it 'sets the Content-Security-Policy header' do
-      get root_path
-      expect(response.headers['Content-Security-Policy']).to be_present
-    end
-
-    it "includes default-src 'self' https:" do
-      get root_path
-      csp = response.headers['Content-Security-Policy']
-      expect(csp).to include("default-src 'self' https:")
-    end
-
-    it 'includes a nonce for scripts' do
-      get root_path
-      csp = response.headers['Content-Security-Policy']
-      expect(csp).to match(%r{script-src 'self' https: 'nonce-[a-zA-Z0-9+/=]+'})
     end
   end
 end

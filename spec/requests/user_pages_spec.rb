@@ -2,14 +2,21 @@
 
 require 'spec_helper'
 
-RSpec.describe 'User pages', type: :request do
+RSpec.describe 'User pages', type: :request do # rubocop:disable Metrics/BlockLength
+  let!(:user) do
+    User.create!(name: 'Example User', email: 'user@example.com', password: 'password',
+                 password_confirmation: 'password')
+  end
+
   describe 'index' do
-    let!(:user) do
-      User.create(name: 'Example User', email: 'user@example.com', password: 'password',
-                  password_confirmation: 'password')
+    context 'when not logged in' do
+      it 'redirects to login' do
+        get users_path
+        expect(response).to redirect_to(login_path)
+      end
     end
 
-    describe 'as non-admin user' do
+    context 'as non-admin user' do
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
         get users_path
@@ -24,10 +31,10 @@ RSpec.describe 'User pages', type: :request do
       end
     end
 
-    describe 'as admin user' do
+    context 'as admin user' do
       let!(:admin) do
-        User.create(name: 'Admin User', email: 'admin@example.com', password: 'password', password_confirmation: 'password',
-                    admin: true)
+        User.create!(name: 'Admin User', email: 'admin@example.com', password: 'password',
+                     password_confirmation: 'password', admin: true)
       end
 
       before do
@@ -39,11 +46,23 @@ RSpec.describe 'User pages', type: :request do
         expect(response.body).to include('>delete</a>')
       end
 
-      it 'should be able to delete another user' do
-        expect do
-          delete user_path(user)
-        end.to change(User, :count).by(-1)
+      it 'deletes another user' do
+        expect { delete user_path(user) }.to change(User, :count).by(-1)
       end
+    end
+  end
+
+  describe 'show' do
+    it 'returns http success' do
+      post login_path, params: { session: { email: user.email, password: user.password } }
+      get user_path(user)
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include(user.name)
+    end
+
+    it 'redirects to login when not logged in' do
+      get user_path(user)
+      expect(response).to redirect_to(login_path)
     end
   end
 end

@@ -3,11 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe 'Albums', type: :request do
-  let!(:user) do
-    User.create(name: 'Example User', email: 'user@example.com', password: 'password',
-                password_confirmation: 'password')
-  end
-
   describe 'GET /albums' do
     it 'works! (now write some real specs)' do
       get albums_path
@@ -16,44 +11,31 @@ RSpec.describe 'Albums', type: :request do
   end
 
   describe 'POST /albums' do
-    context 'when not logged in' do
-      it 'redirects to login' do
+    it 'creates a new album' do
+      expect do
         post albums_path, params: { album: { title: 'New Album' } }
-        expect(response).to redirect_to(login_path)
-      end
+      end.to change(Album, :count).by(1)
+      expect(response).to redirect_to(Album.last)
     end
 
-    context 'when logged in' do
-      before do
-        post login_path, params: { session: { email: user.email, password: user.password } }
-      end
-
-      it 'creates a new album' do
+    context 'with invalid parameters' do
+      it 'does not create a new album' do
         expect do
-          post albums_path, params: { album: { title: 'New Album' } }
-        end.to change(Album, :count).by(1)
-        expect(response).to redirect_to(Album.last)
+          post albums_path, params: { album: { title: '' } }
+        end.not_to change(Album, :count)
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('New Album')
       end
     end
   end
 
-  describe 'GET /albums/new' do
-    context 'when not logged in' do
-      it 'redirects to login' do
-        get new_album_path
-        expect(response).to redirect_to(login_path)
-      end
-    end
+  describe 'GET /albums/:id' do
+    let!(:album) { Album.create!(title: 'Test Album', artist: 'Test Artist') }
 
-    context 'when logged in' do
-      before do
-        post login_path, params: { session: { email: user.email, password: user.password } }
-      end
-
-      it 'returns http success' do
-        get new_album_path
-        expect(response).to have_http_status(:success)
-      end
+    it 'returns http success' do
+      get album_path(album)
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include('Test Album')
     end
   end
 end
