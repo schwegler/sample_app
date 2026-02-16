@@ -10,6 +10,13 @@ RSpec.describe 'TvShows', type: :request do
     end
   end
 
+  describe 'GET /tv_shows/new' do
+    it 'returns http success' do
+      get new_tv_show_path
+      expect(response).to have_http_status(200)
+    end
+  end
+
   describe 'POST /tv_shows' do
     it 'creates a new tv_show' do
       expect do

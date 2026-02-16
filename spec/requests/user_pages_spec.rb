@@ -2,13 +2,20 @@
 
 require 'spec_helper'
 
-RSpec.describe 'User pages', type: :request do
+RSpec.describe 'User pages', type: :request do # rubocop:disable Metrics/BlockLength
   let!(:user) do
     User.create!(name: 'Example User', email: 'user@example.com', password: 'password',
                  password_confirmation: 'password')
   end
 
   describe 'index' do
+    context 'when not logged in' do
+      it 'redirects to login' do
+        get users_path
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
     context 'as non-admin user' do
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
