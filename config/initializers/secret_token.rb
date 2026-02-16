@@ -30,8 +30,7 @@ end
 
 SampleApp::Application.config.secret_key_base = ENV.fetch('SECRET_KEY_BASE') do
   if Rails.env.production? && !File.exist?(Rails.root.join('.secret'))
-    raise 'Secret key base must be set in production via SECRET_KEY_BASE environment variable.'
+    raise "Secret key base must be set in production via SECRET_KEY_BASE environment variable."
   end
-
   secure_token
 end
