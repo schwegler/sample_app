@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe 'WrestlingEvents', type: :request do
   describe 'GET /wrestling_events' do
@@ -10,12 +10,42 @@ RSpec.describe 'WrestlingEvents', type: :request do
     end
   end
 
+  describe 'GET /wrestling_events/new' do
+    context 'when not logged in' do
+      it 'redirects to login path' do
+        get new_wrestling_event_path
+        expect(response).to redirect_to(login_path)
+      end
+    end
+  end
+
   describe 'POST /wrestling_events' do
-    it 'creates a new wrestling_event' do
-      expect do
+    context 'when logged in' do
+      let(:user) { User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password') }
+
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'creates a new wrestling_event' do
+        expect do
+          post wrestling_events_path, params: { wrestling_event: { title: 'New Event' } }
+        end.to change(WrestlingEvent, :count).by(1)
+        expect(response).to redirect_to(WrestlingEvent.last)
+      end
+    end
+
+    context 'when not logged in' do
+      it 'redirects to login path' do
         post wrestling_events_path, params: { wrestling_event: { title: 'New Event' } }
-      end.to change(WrestlingEvent, :count).by(1)
-      expect(response).to redirect_to(WrestlingEvent.last)
+        expect(response).to redirect_to(login_path)
+      end
+
+      it 'does not create a new event' do
+        expect {
+          post wrestling_events_path, params: { wrestling_event: { title: 'New Event' } }
+        }.not_to change(WrestlingEvent, :count)
+      end
     end
   end
 end
