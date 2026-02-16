@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe 'Albums', type: :request do
+RSpec.describe 'Albums', type: :request do # rubocop:disable Metrics/BlockLength
   let!(:user) do
     User.create(name: 'Example User', email: 'user@example.com', password: 'password',
                 password_confirmation: 'password')
@@ -54,6 +54,26 @@ RSpec.describe 'Albums', type: :request do
       get album_path(album)
       expect(response).to have_http_status(:success)
       expect(response.body).to include('Test Album')
+    end
+  end
+
+  describe 'GET /albums/new' do
+    context 'when not logged in' do
+      it 'redirects to login' do
+        get new_album_path
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context 'when logged in' do
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'returns http success' do
+        get new_album_path
+        expect(response).to have_http_status(:success)
+      end
     end
   end
 end

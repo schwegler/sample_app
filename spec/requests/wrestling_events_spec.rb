@@ -2,8 +2,14 @@
 
 require 'rails_helper'
 
-# rubocop:disable Metrics/BlockLength
-RSpec.describe 'WrestlingEvents', type: :request do
+RSpec.describe 'WrestlingEvents', type: :request do # rubocop:disable Metrics/BlockLength
+  let!(:user) do
+    User.create!(name: 'Test User',
+                 email: 'test@example.com',
+                 password: 'password',
+                 password_confirmation: 'password')
+  end
+
   describe 'GET /wrestling_events' do
     it 'renders the index template' do
       get wrestling_events_path
@@ -13,13 +19,6 @@ RSpec.describe 'WrestlingEvents', type: :request do
 
   describe 'GET /wrestling_events/new' do
     context 'when logged in' do
-      let(:user) do
-        User.create!(name: 'Test User',
-                     email: 'test@example.com',
-                     password: 'password',
-                     password_confirmation: 'password')
-      end
-
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
       end
@@ -49,13 +48,6 @@ RSpec.describe 'WrestlingEvents', type: :request do
 
   describe 'POST /wrestling_events' do
     context 'when logged in' do
-      let(:user) do
-        User.create!(name: 'Test User',
-                     email: 'test@example.com',
-                     password: 'password',
-                     password_confirmation: 'password')
-      end
-
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
       end
@@ -70,12 +62,12 @@ RSpec.describe 'WrestlingEvents', type: :request do
       context 'with invalid parameters' do
         it 'does not create a new wrestling_event' do
           expect do
-            post wrestling_events_path, params: { wrestling_event: { title: nil } }
+            post wrestling_events_path, params: { wrestling_event: { title: '' } }
           end.not_to change(WrestlingEvent, :count)
         end
 
         it 'renders the new template' do
-          post wrestling_events_path, params: { wrestling_event: { title: nil } }
+          post wrestling_events_path, params: { wrestling_event: { title: '' } }
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.body).to include('New Wrestling Event')
         end

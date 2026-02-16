@@ -2,6 +2,7 @@
 
 class AlbumsController < ApplicationController
   before_action :logged_in_user, only: %i[new create]
+
   def index
     @albums = Album.all
   end
