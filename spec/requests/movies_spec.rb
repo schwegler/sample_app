@@ -18,4 +18,23 @@ RSpec.describe 'Movies', type: :request do
       expect(response).to redirect_to(Movie.last)
     end
   end
+
+  describe 'GET /movies/:id' do
+    context 'with a valid movie' do
+      let!(:movie) { Movie.create!(title: 'Inception') }
+
+      it 'returns a success response and displays the movie title' do
+        get movie_path(movie)
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('Inception')
+      end
+    end
+
+    context 'with an invalid movie id' do
+      it 'returns a not found response' do
+        get movie_path('0')
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
 end
