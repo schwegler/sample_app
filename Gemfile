@@ -1,32 +1,48 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
-#ruby-gemset=railstutorial_rails_4_0
+ruby '3.2.3'
 
-gem 'rails', '4.0.4'
+gem 'rails', '~> 7.1.3'
+
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3', '~> 1.4'
+
+# Use the Puma web server [https://github.com/puma/puma]
+gem 'puma', '>= 5.0'
+
+# Use SCSS for stylesheets
+gem 'sass-rails', '>= 6'
+
+# Use other typical Rails 7 gems
+gem 'sprockets-rails'
+gem 'jbuilder'
+
+# Restore legacy assets support
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'turbolinks'
+
+# Constrain dependencies to avoid compilation issues with native extensions
+gem 'irb', '1.6.2'
+gem 'rdoc', '6.5.0'
+gem 'psych', '5.0.1'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.8'
-  gem 'rspec-rails', '2.13.1'
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # gem 'debug', platforms: %i[ mri mingw x64_mingw ]
+  gem 'rspec-rails', '~> 6.0'
+end
+
+group :development do
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'web-console'
 end
 
 group :test do
-  gem 'selenium-webdriver', '2.35.1'
-  gem 'capybara', '2.1.0'
-end
-
-gem 'sass-rails', '4.0.1'
-gem 'uglifier', '2.1.1'
-gem 'coffee-rails', '4.0.1'
-gem 'jquery-rails', '3.0.4'
-gem 'turbolinks', '1.1.1'
-gem 'jbuilder', '1.0.2'
-
-group :doc do
-  gem 'sdoc', '0.3.20', require: false
+  # Adds support for Capybara system testing and selenium driver
+  gem 'capybara'
+  gem 'selenium-webdriver'
 end
 
 group :production do
-  gem 'pg', '0.15.1'
-  gem 'rails_12factor', '0.0.2'
-  gem 'puma'
+  gem 'pg'
 end

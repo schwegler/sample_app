@@ -19,7 +19,7 @@ describe "secure_token" do
   it "generates a new token when .secret does not exist" do
     token = secure_token
     expect(token).to match(/\A[0-9a-f]{128}\z/)
-    expect(File.exist?(token_file)).to be_true
+    expect(File.exist?(token_file)).to be true
     expect(File.read(token_file).chomp).to eq(token)
   end
 
