@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
+# rubocop:disable Metrics/BlockLength
+RSpec.describe User, type: :model do
   before do
     @user = User.new(name: 'Example User', email: 'user@example.com',
                      password: 'password', password_confirmation: 'password')
@@ -74,6 +75,8 @@ RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
         expect(@user).to be_valid
       end
     end
+  end
+
   describe 'when email address is already taken' do
     before do
       user_with_same_email = @user.dup
