@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'WrestlingEvents', type: :request do # rubocop:disable Metrics/BlockLength
-  let(:user) do
+  let!(:user) do
     User.create!(name: 'Test User',
                  email: 'test@example.com',
                  password: 'password',
@@ -62,12 +62,12 @@ RSpec.describe 'WrestlingEvents', type: :request do # rubocop:disable Metrics/Bl
       context 'with invalid parameters' do
         it 'does not create a new wrestling_event' do
           expect do
-            post wrestling_events_path, params: { wrestling_event: { title: nil } }
+            post wrestling_events_path, params: { wrestling_event: { title: '' } }
           end.not_to change(WrestlingEvent, :count)
         end
 
         it 'renders the new template' do
-          post wrestling_events_path, params: { wrestling_event: { title: nil } }
+          post wrestling_events_path, params: { wrestling_event: { title: '' } }
           expect(response).to have_http_status(:unprocessable_entity)
           expect(response.body).to include('New Wrestling Event')
         end
@@ -84,20 +84,6 @@ RSpec.describe 'WrestlingEvents', type: :request do # rubocop:disable Metrics/Bl
         expect do
           post wrestling_events_path, params: { wrestling_event: { title: 'New Event' } }
         end.not_to change(WrestlingEvent, :count)
-      end
-    end
-
-    context 'with invalid parameters' do
-      it 'does not create a new wrestling_event' do
-        expect do
-          post wrestling_events_path, params: { wrestling_event: { title: nil } }
-        end.not_to change(WrestlingEvent, :count)
-      end
-
-      it 'renders the new template' do
-        post wrestling_events_path, params: { wrestling_event: { title: nil } }
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.body).to include('New Wrestling Event')
       end
     end
   end
