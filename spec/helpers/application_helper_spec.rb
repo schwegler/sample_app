@@ -7,11 +7,11 @@ describe ApplicationHelper do
     end
 
     it "includes the base title" do
-      expect(full_title("foo")).to match(/^foo \| SampleApp$/)
+      expect(full_title("foo")).to match(/^foo \| Media Inventory App$/)
     end
 
     it "does not include a bar for the home page" do
-      expect(full_title("")).to match(/^SampleApp$/)
+      expect(full_title("")).to match(/^Media Inventory App$/)
     end
   end
 end
