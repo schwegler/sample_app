@@ -14,8 +14,36 @@ RSpec.describe 'Albums', type: :request do
     it 'creates a new album' do
       expect do
         post albums_path, params: { album: { title: 'New Album' } }
+<<<<<<< test/albums-create-invalid-params-13801697839977639614
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context 'when logged in' do
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'creates a new album' do
+        expect do
+          post albums_path, params: { album: { title: 'New Album' } }
+        end.to change(Album, :count).by(1)
+        expect(response).to redirect_to(Album.last)
+      end
+
+      context 'with invalid parameters' do
+        it 'does not create a new album' do
+          expect do
+            post albums_path, params: { album: { title: '' } }
+          end.not_to change(Album, :count)
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include('New Album')
+        end
+      end
+=======
       end.to change(Album, :count).by(1)
       expect(response).to redirect_to(Album.last)
+>>>>>>> master
     end
   end
 
