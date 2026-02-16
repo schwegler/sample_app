@@ -21,7 +21,12 @@ RSpec.describe 'WrestlingEvents', type: :request do
 
   describe 'POST /wrestling_events' do
     context 'when logged in' do
-      let(:user) { User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password') }
+      let(:user) do
+        User.create!(name: 'Test User',
+                     email: 'test@example.com',
+                     password: 'password',
+                     password_confirmation: 'password')
+      end
 
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
@@ -42,9 +47,9 @@ RSpec.describe 'WrestlingEvents', type: :request do
       end
 
       it 'does not create a new event' do
-        expect {
+        expect do
           post wrestling_events_path, params: { wrestling_event: { title: 'New Event' } }
-        }.not_to change(WrestlingEvent, :count)
+        end.not_to change(WrestlingEvent, :count)
       end
     end
   end
