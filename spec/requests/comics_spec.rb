@@ -18,6 +18,21 @@ RSpec.describe 'Comics', type: :request do
         expect(response).to redirect_to(login_path)
       end
     end
+
+    context 'when logged in' do
+      let(:user) do
+        User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+      end
+
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'returns http success' do
+        get new_comic_path
+        expect(response).to have_http_status(:success)
+      end
+    end
   end
 
   describe 'GET /comics/:id' do
@@ -63,6 +78,20 @@ RSpec.describe 'Comics', type: :request do
           post comics_path, params: { comic: { title: 'Authorized Comic' } }
         end.to change(Comic, :count).by(1)
         expect(response).to redirect_to(Comic.last)
+      end
+
+      context 'with invalid parameters' do
+        it 'does not create a new comic' do
+          expect do
+            post comics_path, params: { comic: { title: '' } }
+          end.not_to change(Comic, :count)
+        end
+
+        it 'renders the new template' do
+          post comics_path, params: { comic: { title: '' } }
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include('New Comic')
+        end
       end
     end
   end
