@@ -22,7 +22,27 @@
     <div class="alert alert-<%= message_type %>"><%= message %></div>
   <% end %>
 
-<%= yield %>
+<header>
+  <nav>
+    <ul class="nav-links">
+      <li><%= link_to "Comics", comics_path %></li>
+      <li><%= link_to "TV Shows", tv_shows_path %></li>
+      <li><%= link_to "Wrestling Events", wrestling_events_path %></li>
+      <li><%= link_to "Movies", movies_path %></li>
+      <li><%= link_to "Albums", albums_path %></li>
+    </ul>
+  </nav>
+</header>
+
+<main class="container">
+  <%= yield %>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2024 Sample App</p>
+  </div>
+</footer>
 
 </body>
 </html>
