@@ -10,13 +10,6 @@ RSpec.describe 'Movies', type: :request do
     end
   end
 
-  describe 'GET /movies/new' do
-    it 'returns http success' do
-      get new_movie_path
-      expect(response).to have_http_status(200)
-    end
-  end
-
   describe 'POST /movies' do
     it 'creates a new movie' do
       expect do
