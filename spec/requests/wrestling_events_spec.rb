@@ -16,6 +16,13 @@ RSpec.describe 'WrestlingEvents', type: :request do
         get new_wrestling_event_path
         expect(response).to redirect_to(login_path)
       end
+      
+  describe 'GET /wrestling_events/:id' do
+    it 'renders the show template' do
+      wrestling_event = WrestlingEvent.create!(title: 'WrestleMania')
+      get wrestling_event_path(wrestling_event)
+      expect(response).to have_http_status(200)
+      expect(response.body).to include('WrestleMania')
     end
   end
 
