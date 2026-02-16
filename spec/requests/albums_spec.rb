@@ -34,6 +34,16 @@ RSpec.describe 'Albums', type: :request do
         end.to change(Album, :count).by(1)
         expect(response).to redirect_to(Album.last)
       end
+
+      context 'with invalid parameters' do
+        it 'does not create a new album' do
+          expect do
+            post albums_path, params: { album: { title: '' } }
+          end.not_to change(Album, :count)
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include('New Album')
+        end
+      end
     end
   end
 
