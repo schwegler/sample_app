@@ -2,4 +2,14 @@
 <p>Season: <%= @tv_show.season %></p>
 <p>Episode: <%= @tv_show.episode %></p>
 <p>Network: <%= @tv_show.network %></p>
+<p>Publication Date: <%= @tv_show.publication_date %></p>
+<p>Watched On: <%= @tv_show.watched_on %></p>
+
+<% if @tv_show.cover_art.attached? %>
+  <p>
+    <strong>Cover Art:</strong><br>
+    <%= image_tag @tv_show.cover_art, style: "max-width: 300px; max-height: 300px;" %>
+  </p>
+<% end %>
+
 <%= link_to 'Back', tv_shows_path %>

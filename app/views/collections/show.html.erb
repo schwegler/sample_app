@@ -1,0 +1,24 @@
+<h1><%= @collection.name %></h1>
+<%= link_to "Back to Collections", collections_path %>
+
+<h2>Items</h2>
+<ul>
+  <% @items.each do |item| %>
+    <li>
+      <h3><%= item.media_item.title %> (<%= item.media_item.class.name %>)</h3>
+      <%= link_to "View", item.media_item %>
+      <% if item.media_item.cover_art.attached? %>
+        <%= image_tag item.media_item.cover_art, style: "max-width: 100px; max-height: 100px;" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Add New Item to Collection</h2>
+<ul>
+  <li><%= link_to "Add Album", new_album_path(collection_id: @collection.id) %></li>
+  <li><%= link_to "Add Comic", new_comic_path(collection_id: @collection.id) %></li>
+  <li><%= link_to "Add Movie", new_movie_path(collection_id: @collection.id) %></li>
+  <li><%= link_to "Add TV Show", new_tv_show_path(collection_id: @collection.id) %></li>
+  <li><%= link_to "Add Wrestling Event", new_wrestling_event_path(collection_id: @collection.id) %></li>
+</ul>

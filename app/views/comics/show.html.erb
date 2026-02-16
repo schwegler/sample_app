@@ -3,4 +3,14 @@
 <p>Publisher: <%= @comic.publisher %></p>
 <p>Writer: <%= @comic.writer %></p>
 <p>Artist: <%= @comic.artist %></p>
+<p>Publication Date: <%= @comic.publication_date %></p>
+<p>Read On: <%= @comic.read_on %></p>
+
+<% if @comic.cover_art.attached? %>
+  <p>
+    <strong>Cover Art:</strong><br>
+    <%= image_tag @comic.cover_art, style: "max-width: 300px; max-height: 300px;" %>
+  </p>
+<% end %>
+
 <%= link_to 'Back', comics_path %>

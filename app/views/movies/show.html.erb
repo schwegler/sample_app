@@ -2,4 +2,14 @@
 <p>Director: <%= @movie.director %></p>
 <p>Release Year: <%= @movie.release_year %></p>
 <p>Rating: <%= @movie.rating %></p>
+<p>Publication Date: <%= @movie.publication_date %></p>
+<p>Watched On: <%= @movie.watched_on %></p>
+
+<% if @movie.cover_art.attached? %>
+  <p>
+    <strong>Cover Art:</strong><br>
+    <%= image_tag @movie.cover_art, style: "max-width: 300px; max-height: 300px;" %>
+  </p>
+<% end %>
+
 <%= link_to 'Back', movies_path %>

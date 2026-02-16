@@ -2,4 +2,13 @@
 <p>Promotion: <%= @wrestling_event.promotion %></p>
 <p>Date: <%= @wrestling_event.date %></p>
 <p>Venue: <%= @wrestling_event.venue %></p>
+<p>Watched On: <%= @wrestling_event.watched_on %></p>
+
+<% if @wrestling_event.cover_art.attached? %>
+  <p>
+    <strong>Cover Art:</strong><br>
+    <%= image_tag @wrestling_event.cover_art, style: "max-width: 300px; max-height: 300px;" %>
+  </p>
+<% end %>
+
 <%= link_to 'Back', wrestling_events_path %>
