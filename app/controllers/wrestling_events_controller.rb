@@ -14,7 +14,7 @@ class WrestlingEventsController < ApplicationController
     if @wrestling_event.save
       redirect_to @wrestling_event
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 

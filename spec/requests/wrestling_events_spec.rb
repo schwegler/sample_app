@@ -4,8 +4,15 @@ require 'spec_helper'
 
 RSpec.describe 'WrestlingEvents', type: :request do
   describe 'GET /wrestling_events' do
-    it 'works! (now write some real specs)' do
+    it 'renders the index template' do
       get wrestling_events_path
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'GET /wrestling_events/new' do
+    it 'renders the new template' do
+      get new_wrestling_event_path
       expect(response).to have_http_status(200)
     end
   end
@@ -30,13 +37,13 @@ RSpec.describe 'WrestlingEvents', type: :request do
     context 'with invalid parameters' do
       it 'does not create a new wrestling_event' do
         expect do
-          post wrestling_events_path, params: { wrestling_event: { title: '' } }
+          post wrestling_events_path, params: { wrestling_event: { title: nil } }
         end.not_to change(WrestlingEvent, :count)
       end
 
       it 'renders the new template' do
-        post wrestling_events_path, params: { wrestling_event: { title: '' } }
-        expect(response).to have_http_status(:ok)
+        post wrestling_events_path, params: { wrestling_event: { title: nil } }
+        expect(response).to have_http_status(:unprocessable_entity)
         expect(response.body).to include('New Wrestling Event')
       end
     end
