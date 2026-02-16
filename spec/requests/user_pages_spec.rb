@@ -16,7 +16,7 @@ RSpec.describe "User pages", type: :request do
       end
 
       it "does not show delete links" do
-        expect(response.body).not_to include(">delete</a>")
+        expect(response.body).not_to include(">Delete</a>")
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe "User pages", type: :request do
       end
 
       it "shows delete links" do
-        expect(response.body).to include(">delete</a>")
+        expect(response.body).to include(">Delete</a>")
       end
 
       it "should be able to delete another user" do

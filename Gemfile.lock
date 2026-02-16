@@ -88,6 +88,8 @@ GEM
     benchmark (0.5.0)
     bigdecimal (4.0.1)
     bindex (0.8.1)
+    bootstrap (5.3.8)
+      popper_js (>= 2.11.8, < 3)
     brakeman (8.0.2)
       racc
     builder (3.3.0)
@@ -168,6 +170,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.3-x86_64-linux)
+    popper_js (2.11.8)
     prism (1.9.0)
     psych (5.0.1)
       stringio
@@ -318,6 +321,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1)
+  bootstrap (~> 5.3)
   brakeman
   bundler-audit
   capybara
@@ -326,6 +330,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   pg
+  popper_js
   psych (= 5.0.1)
   puma (>= 5.0)
   rails (~> 7.1.3)
