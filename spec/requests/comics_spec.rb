@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+# rubocop:disable Metrics/BlockLength
 
 RSpec.describe 'Comics', type: :request do
   describe 'GET /comics' do
@@ -16,6 +17,21 @@ RSpec.describe 'Comics', type: :request do
         get new_comic_path
         expect(response).to redirect_to(login_path)
       end
+    end
+  end
+
+  describe 'GET /comics/:id' do
+    let!(:comic) { Comic.create!(title: 'Batman', issue_number: 1, publisher: 'DC') }
+
+    it 'returns a successful response' do
+      get comic_path(comic)
+      expect(response).to have_http_status(200)
+    end
+
+    it 'includes the comic details' do
+      get comic_path(comic)
+      expect(response.body).to include('Batman')
+      expect(response.body).to include('DC')
     end
   end
 
@@ -51,3 +67,4 @@ RSpec.describe 'Comics', type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
