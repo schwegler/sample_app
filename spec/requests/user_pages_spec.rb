@@ -3,13 +3,13 @@
 require 'spec_helper'
 
 RSpec.describe 'User pages', type: :request do
-  describe 'index' do
-    let!(:user) do
-      User.create!(name: 'Example User', email: 'user@example.com', password: 'password',
-                  password_confirmation: 'password')
-    end
+  let!(:user) do
+    User.create!(name: 'Example User', email: 'user@example.com', password: 'password',
+                 password_confirmation: 'password')
+  end
 
-    describe 'as non-admin user' do
+  describe 'index' do
+    context 'as non-admin user' do
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
         get users_path
@@ -24,10 +24,10 @@ RSpec.describe 'User pages', type: :request do
       end
     end
 
-    describe 'as admin user' do
+    context 'as admin user' do
       let!(:admin) do
-        User.create!(name: 'Admin User', email: 'admin@example.com', password: 'password', password_confirmation: 'password',
-                    admin: true)
+        User.create!(name: 'Admin User', email: 'admin@example.com', password: 'password',
+                     password_confirmation: 'password', admin: true)
       end
 
       before do
@@ -39,41 +39,23 @@ RSpec.describe 'User pages', type: :request do
         expect(response.body).to include('>delete</a>')
       end
 
-      it 'should be able to delete another user' do
-        expect do
-          delete user_path(user)
-        end.to change(User, :count).by(-1)
+      it 'deletes another user' do
+        expect { delete user_path(user) }.to change(User, :count).by(-1)
       end
     end
   end
 
   describe 'show' do
-    let(:user) do
-      User.create!(name: 'Example User', email: 'user@example.com', password: 'password',
-                  password_confirmation: 'password')
+    it 'returns http success' do
+      post login_path, params: { session: { email: user.email, password: user.password } }
+      get user_path(user)
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include(user.name)
     end
 
-    context 'when logged in' do
-      before do
-        post login_path, params: { session: { email: user.email, password: user.password } }
-        get user_path(user)
-      end
-
-      it 'returns http success' do
-        expect(response).to have_http_status(:success)
-      end
-
-      it 'displays the user name' do
-        expect(response.body).to include(user.name)
-      end
-    end
-
-    context 'when not logged in' do
-      before { get user_path(user) }
-
-      it 'redirects to login' do
-        expect(response).to redirect_to(login_path)
-      end
+    it 'redirects to login when not logged in' do
+      get user_path(user)
+      expect(response).to redirect_to(login_path)
     end
   end
 end
