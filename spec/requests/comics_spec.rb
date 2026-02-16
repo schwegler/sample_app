@@ -64,6 +64,20 @@ RSpec.describe 'Comics', type: :request do
         end.to change(Comic, :count).by(1)
         expect(response).to redirect_to(Comic.last)
       end
+
+      context 'with invalid parameters' do
+        it 'does not create a new comic' do
+          expect do
+            post comics_path, params: { comic: { title: '' } }
+          end.not_to change(Comic, :count)
+        end
+
+        it 'renders the new template' do
+          post comics_path, params: { comic: { title: '' } }
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include('New Comic')
+        end
+      end
     end
   end
 end
