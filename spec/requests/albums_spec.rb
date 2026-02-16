@@ -3,6 +3,11 @@
 require 'spec_helper'
 
 RSpec.describe 'Albums', type: :request do
+  let!(:user) do
+    User.create(name: 'Example User', email: 'user@example.com', password: 'password',
+                password_confirmation: 'password')
+  end
+
   describe 'GET /albums' do
     it 'works! (now write some real specs)' do
       get albums_path
@@ -11,11 +16,44 @@ RSpec.describe 'Albums', type: :request do
   end
 
   describe 'POST /albums' do
-    it 'creates a new album' do
-      expect do
+    context 'when not logged in' do
+      it 'redirects to login' do
         post albums_path, params: { album: { title: 'New Album' } }
-      end.to change(Album, :count).by(1)
-      expect(response).to redirect_to(Album.last)
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context 'when logged in' do
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'creates a new album' do
+        expect do
+          post albums_path, params: { album: { title: 'New Album' } }
+        end.to change(Album, :count).by(1)
+        expect(response).to redirect_to(Album.last)
+      end
+    end
+  end
+
+  describe 'GET /albums/new' do
+    context 'when not logged in' do
+      it 'redirects to login' do
+        get new_album_path
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context 'when logged in' do
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'returns http success' do
+        get new_album_path
+        expect(response).to have_http_status(:success)
+      end
     end
   end
 end
