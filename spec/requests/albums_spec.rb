@@ -40,7 +40,7 @@ RSpec.describe 'Albums', type: :request do # rubocop:disable Metrics/BlockLength
           expect do
             post albums_path, params: { album: { title: '' } }
           end.not_to change(Album, :count)
-          expect(response).to have_http_status(:success)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.body).to include('New Album')
         end
       end

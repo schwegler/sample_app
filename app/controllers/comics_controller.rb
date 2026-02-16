@@ -1,31 +1,15 @@
 # frozen_string_literal: true
 
-class ComicsController < ApplicationController
+class ComicsController < InventoryController
   before_action :logged_in_user, only: %i[new create]
-  def index
-    @comics = Comic.all
-  end
-
-  def new
-    @comic = Comic.new
-  end
-
-  def create
-    @comic = Comic.new(comic_params)
-    if @comic.save
-      redirect_to @comic
-    else
-      render :new
-    end
-  end
-
-  def show
-    @comic = Comic.find(params[:id])
-  end
 
   private
 
   def comic_params
     params.require(:comic).permit(:title, :issue_number, :publisher, :writer, :artist)
+  end
+
+  def resource_params
+    comic_params
   end
 end
