@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe User, type: :model do
   before do
     @user = User.new(name: 'Example User', email: 'user@example.com',
@@ -68,3 +69,4 @@ RSpec.describe User, type: :model do
     it { should_not be_valid }
   end
 end
+# rubocop:enable Metrics/BlockLength
