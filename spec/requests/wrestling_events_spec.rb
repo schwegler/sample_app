@@ -26,5 +26,19 @@ RSpec.describe 'WrestlingEvents', type: :request do
       end.to change(WrestlingEvent, :count).by(1)
       expect(response).to redirect_to(WrestlingEvent.last)
     end
+
+    context 'with invalid parameters' do
+      it 'does not create a new wrestling_event' do
+        expect do
+          post wrestling_events_path, params: { wrestling_event: { title: '' } }
+        end.not_to change(WrestlingEvent, :count)
+      end
+
+      it 'renders the new template' do
+        post wrestling_events_path, params: { wrestling_event: { title: '' } }
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('New Wrestling Event')
+      end
+    end
   end
 end
