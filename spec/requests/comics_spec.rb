@@ -5,9 +5,18 @@ require 'spec_helper'
 
 RSpec.describe 'Comics', type: :request do
   describe 'GET /comics' do
-    it 'works! (now write some real specs)' do
+    let!(:comic1) { Comic.create!(title: 'Amazing Spider-Man', issue_number: 1, publisher: 'Marvel') }
+    let!(:comic2) { Comic.create!(title: 'Detective Comics', issue_number: 27, publisher: 'DC') }
+
+    it 'returns a successful response' do
       get comics_path
       expect(response).to have_http_status(200)
+    end
+
+    it 'includes the comic titles' do
+      get comics_path
+      expect(response.body).to include('Amazing Spider-Man')
+      expect(response.body).to include('Detective Comics')
     end
   end
 
@@ -16,6 +25,22 @@ RSpec.describe 'Comics', type: :request do
       it 'redirects to login path' do
         get new_comic_path
         expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context 'when logged in' do
+      let(:user) do
+        User.create!(name: 'Test User', email: 'test@example.com', password: 'password',
+                     password_confirmation: 'password')
+      end
+
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'returns a successful response' do
+        get new_comic_path
+        expect(response).to have_http_status(200)
       end
     end
   end
