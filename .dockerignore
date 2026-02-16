@@ -1,0 +1,45 @@
+# Ignore git directory.
+.git/
+.gitignore
+
+# Ignore bundler config.
+/.bundle/
+
+# Ignore all environment files.
+.env*
+
+# Ignore all default key files.
+/config/master.key
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# Ignore storage (uploaded files in development and any SQLite databases).
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/
+!/tmp/storage/.keep
+
+/public/assets
+
+# Ignore node_modules if present
+node_modules/
+
+# Ignore pre-existing gems.
+/vendor/bundle/
+/vendor/cache/
+/vendor/gems/
+/vendor/ruby/
+
+# Ignore test files
+/test
+/spec
