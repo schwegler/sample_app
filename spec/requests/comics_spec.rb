@@ -34,7 +34,9 @@ RSpec.describe 'Comics', type: :request do
     end
 
     context 'when logged in' do
-      let(:user) { User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password') }
+      let(:user) do
+        User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+      end
 
       before do
         post login_path, params: { session: { email: user.email, password: user.password } }
