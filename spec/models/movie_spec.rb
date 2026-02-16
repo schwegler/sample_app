@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'spec_helper'
 
 RSpec.describe Movie, type: :model do
   it "is valid with a title" do

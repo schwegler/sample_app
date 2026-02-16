@@ -1,9 +1,5 @@
 <h1>New Movie</h1>
 <%= form_for @movie do |f| %>
-  <% if params[:collection_id] %>
-    <%= hidden_field_tag :collection_id, params[:collection_id] %>
-  <% end %>
-
   <div>
     <%= f.label :title %>
     <%= f.text_field :title %>
@@ -19,18 +15,6 @@
   <div>
     <%= f.label :rating %>
     <%= f.text_field :rating %>
-  </div>
-  <div>
-    <%= f.label :publication_date %>
-    <%= f.date_field :publication_date %>
-  </div>
-  <div>
-    <%= f.label :watched_on %>
-    <%= f.date_field :watched_on %>
-  </div>
-  <div>
-    <%= f.label :cover_art %>
-    <%= f.file_field :cover_art %>
   </div>
   <%= f.submit %>
 <% end %>

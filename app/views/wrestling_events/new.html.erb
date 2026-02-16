@@ -1,9 +1,5 @@
 <h1>New Wrestling Event</h1>
 <%= form_for @wrestling_event do |f| %>
-  <% if params[:collection_id] %>
-    <%= hidden_field_tag :collection_id, params[:collection_id] %>
-  <% end %>
-
   <div>
     <%= f.label :title %>
     <%= f.text_field :title %>
@@ -13,20 +9,12 @@
     <%= f.text_field :promotion %>
   </div>
   <div>
-    <%= f.label :venue %>
-    <%= f.text_field :venue %>
-  </div>
-  <div>
     <%= f.label :date %>
     <%= f.date_field :date %>
   </div>
   <div>
-    <%= f.label :watched_on %>
-    <%= f.date_field :watched_on %>
-  </div>
-  <div>
-    <%= f.label :cover_art %>
-    <%= f.file_field :cover_art %>
+    <%= f.label :venue %>
+    <%= f.text_field :venue %>
   </div>
   <%= f.submit %>
 <% end %>

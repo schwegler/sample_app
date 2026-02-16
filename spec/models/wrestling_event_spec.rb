@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'spec_helper'
 
 RSpec.describe WrestlingEvent, type: :model do
   it "is valid with a title" do
