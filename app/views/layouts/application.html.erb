@@ -2,36 +2,63 @@
 <html>
 <head>
   <title><%= full_title(yield(:title)) %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul class="nav-links">
-        <li><%= link_to "Comics", comics_path %></li>
-        <li><%= link_to "TV Shows", tv_shows_path %></li>
-        <li><%= link_to "Wrestling Events", wrestling_events_path %></li>
-        <li><%= link_to "Movies", movies_path %></li>
-        <li><%= link_to "Albums", albums_path %></li>
-        <% if logged_in? %>
-          <li><%= link_to "Users", users_path %></li>
-          <li><%= link_to "Profile", current_user %></li>
-          <li><%= link_to "Log out", logout_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to "Log in", login_path %></li>
-        <% end %>
-      </ul>
-    </nav>
-  </header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+      <%= link_to "Sample App", root_path, class: "navbar-brand" %>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <%= link_to "Comics", comics_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "TV Shows", tv_shows_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Wrestling Events", wrestling_events_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Movies", movies_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Albums", albums_path, class: "nav-link" %>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <% if logged_in? %>
+            <li class="nav-item">
+              <%= link_to "Users", users_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Profile", current_user, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Log out", logout_path, method: :delete, class: "nav-link" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "Log in", login_path, class: "nav-link" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-<main class="container">
-  <% flash.each do |message_type, message| %>
-    <div class="alert alert-<%= message_type %>"><%= message %></div>
-  <% end %>
-  <%= yield %>
-</main>
+  <main class="container">
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+    <%= yield %>
+  </main>
 
 <footer>
   <div class="container">
