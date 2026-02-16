@@ -1,0 +1,7 @@
+<h1>Wrestling Events</h1>
+<%= link_to 'New Wrestling Event', new_wrestling_event_path %>
+<ul>
+  <% @wrestling_events.each do |event| %>
+    <li><%= link_to event.title, event %></li>
+  <% end %>
+</ul>

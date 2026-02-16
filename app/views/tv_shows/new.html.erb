@@ -1,0 +1,20 @@
+<h1>New TV Show</h1>
+<%= form_for @tv_show do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :season %>
+    <%= f.number_field :season %>
+  </div>
+  <div>
+    <%= f.label :episode %>
+    <%= f.number_field :episode %>
+  </div>
+  <div>
+    <%= f.label :network %>
+    <%= f.text_field :network %>
+  </div>
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,7 @@
+<h1>Comics</h1>
+<%= link_to 'New Comic', new_comic_path %>
+<ul>
+  <% @comics.each do |comic| %>
+    <li><%= link_to comic.title, comic %></li>
+  <% end %>
+</ul>
