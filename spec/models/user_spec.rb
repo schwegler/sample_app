@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User, type: :model do # rubocop:disable Metrics/BlockLength
   before do
     @user = User.new(name: 'Example User', email: 'user@example.com',
                      password: 'password', password_confirmation: 'password')
