@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 
 # Your secret key is used for verifying the integrity of signed cookies.
@@ -13,6 +15,8 @@ require 'securerandom'
 
 def secure_token
   token_file = Rails.root.join('.secret')
+  return ENV['SECRET_KEY_BASE'] if ENV['SECRET_KEY_BASE']
+
   if File.exist?(token_file)
     # Use the existing token.
     File.read(token_file).chomp
