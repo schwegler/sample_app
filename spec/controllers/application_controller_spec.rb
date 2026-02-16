@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
   controller do
     def create
-      render plain: "Hello"
+      render plain: 'Hello'
     end
   end
 
@@ -15,9 +17,9 @@ RSpec.describe ApplicationController, type: :controller do
     ActionController::Base.allow_forgery_protection = false
   end
 
-  it "raises InvalidAuthenticityToken when CSRF token is missing" do
-    expect {
+  it 'raises InvalidAuthenticityToken when CSRF token is missing' do
+    expect do
       post :create
-    }.to raise_error(ActionController::InvalidAuthenticityToken)
+    end.to raise_error(ActionController::InvalidAuthenticityToken)
   end
 end

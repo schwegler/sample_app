@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe User, type: :model do
   before do
-    @user = User.new(name: "Example User", email: "user@example.com",
-                     password: "password", password_confirmation: "password")
+    @user = User.new(name: 'Example User', email: 'user@example.com',
+                     password: 'password', password_confirmation: 'password')
   end
 
   subject { @user }
@@ -27,23 +29,23 @@ RSpec.describe User, type: :model do
     it { should be_admin }
   end
 
-  describe "when name is not present" do
-    before { @user.name = " " }
+  describe 'when name is not present' do
+    before { @user.name = ' ' }
     it { should_not be_valid }
   end
 
-  describe "when email is not present" do
-    before { @user.email = " " }
+  describe 'when email is not present' do
+    before { @user.email = ' ' }
     it { should_not be_valid }
   end
 
-  describe "when password is not present" do
-    before { @user.password = @user.password_confirmation = " " }
+  describe 'when password is not present' do
+    before { @user.password = @user.password_confirmation = ' ' }
     it { should_not be_valid }
   end
 
-  describe "when password is too short" do
-    before { @user.password = @user.password_confirmation = "a" * 5 }
+  describe 'when password is too short' do
+    before { @user.password = @user.password_confirmation = 'a' * 5 }
     it { should_not be_valid }
   end
 end

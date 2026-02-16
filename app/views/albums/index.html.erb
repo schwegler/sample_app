@@ -1,31 +1,7 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h1>Albums</h1>
-  <%= link_to 'New Album', new_album_path, class: "btn btn-primary" %>
-</div>
-
-<div class="table-responsive">
-  <table class="table table-striped table-hover align-middle">
-    <thead class="table-light">
-      <tr>
-        <th>Title</th>
-        <th>Artist</th>
-        <th>Year</th>
-        <th>Genre</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @albums.each do |album| %>
-        <tr>
-          <td><%= album.title %></td>
-          <td><%= album.artist %></td>
-          <td><%= album.release_year %></td>
-          <td><%= album.genre %></td>
-          <td>
-            <%= link_to 'Show', album, class: "btn btn-sm btn-outline-info" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+<h1>Albums</h1>
+<%= link_to 'New Album', new_album_path %>
+<ul>
+  <% @albums.each do |album| %>
+    <li><%= link_to album.title, album %></li>
+  <% end %>
+</ul>

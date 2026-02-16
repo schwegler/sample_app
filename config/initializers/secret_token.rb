@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 
 # Your secret key is used for verifying the integrity of signed cookies.
@@ -28,7 +30,8 @@ end
 
 SampleApp::Application.config.secret_key_base = ENV.fetch('SECRET_KEY_BASE') do
   if Rails.env.production? && !File.exist?(Rails.root.join('.secret'))
-    raise "Secret key base must be set in production via SECRET_KEY_BASE environment variable."
+    raise 'Secret key base must be set in production via SECRET_KEY_BASE environment variable.'
   end
+
   secure_token
 end

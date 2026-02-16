@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 SampleApp::Application.routes.draw do
   root 'users#index'
   get    '/login',   to: 'sessions#new'
