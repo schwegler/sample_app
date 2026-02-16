@@ -26,6 +26,9 @@ gem 'irb', '1.6.2'
 gem 'rdoc', '>= 6.5.1.1'
 gem 'psych', '5.0.1'
 
+gem 'bootstrap', '~> 5.3'
+gem 'popper_js'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'debug', platforms: %i[ mri mingw x64_mingw ]
