@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe 'User pages', type: :request do
+RSpec.describe 'User pages', type: :request do # rubocop:disable Metrics/BlockLength
   let!(:user) do
     User.create!(name: 'Example User', email: 'user@example.com', password: 'password',
                  password_confirmation: 'password')
