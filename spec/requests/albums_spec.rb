@@ -9,9 +9,14 @@ RSpec.describe 'Albums', type: :request do # rubocop:disable Metrics/BlockLength
   end
 
   describe 'GET /albums' do
-    it 'works! (now write some real specs)' do
+    let!(:album1) { Album.create!(title: 'Album 1', artist: 'Artist 1') }
+    let!(:album2) { Album.create!(title: 'Album 2', artist: 'Artist 2') }
+
+    it 'returns http success and lists albums' do
       get albums_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:success)
+      expect(response.body).to include('Album 1')
+      expect(response.body).to include('Album 2')
     end
   end
 
