@@ -10,6 +10,15 @@ RSpec.describe 'WrestlingEvents', type: :request do
     end
   end
 
+  describe 'GET /wrestling_events/:id' do
+    it 'renders the show template' do
+      wrestling_event = WrestlingEvent.create!(title: 'WrestleMania')
+      get wrestling_event_path(wrestling_event)
+      expect(response).to have_http_status(200)
+      expect(response.body).to include('WrestleMania')
+    end
+  end
+
   describe 'POST /wrestling_events' do
     it 'creates a new wrestling_event' do
       expect do
