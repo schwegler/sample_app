@@ -68,7 +68,7 @@ RSpec.describe 'WrestlingEvents', type: :request do # rubocop:disable Metrics/Bl
 
         it 'renders the new template' do
           post wrestling_events_path, params: { wrestling_event: { title: '' } }
-          expect(response).to have_http_status(:unprocessable_entity)
+          expect(response).to have_http_status(:unprocessable_content)
           expect(response.body).to include('New Wrestling Event')
         end
       end
