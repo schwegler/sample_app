@@ -1,4 +1,10 @@
 SampleApp::Application.routes.draw do
+  resources :comics
+  resources :tv_shows
+  resources :wrestling_events
+  resources :movies
+  resources :albums
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

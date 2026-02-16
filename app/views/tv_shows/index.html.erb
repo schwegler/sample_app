@@ -1,0 +1,7 @@
+<h1>TV Shows</h1>
+<%= link_to 'New TV Show', new_tv_show_path %>
+<ul>
+  <% @tv_shows.each do |tv_show| %>
+    <li><%= link_to tv_show.title, tv_show %></li>
+  <% end %>
+</ul>

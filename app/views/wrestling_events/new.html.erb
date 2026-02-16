@@ -1,0 +1,20 @@
+<h1>New Wrestling Event</h1>
+<%= form_for @wrestling_event do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :promotion %>
+    <%= f.text_field :promotion %>
+  </div>
+  <div>
+    <%= f.label :date %>
+    <%= f.date_field :date %>
+  </div>
+  <div>
+    <%= f.label :venue %>
+    <%= f.text_field :venue %>
+  </div>
+  <%= f.submit %>
+<% end %>

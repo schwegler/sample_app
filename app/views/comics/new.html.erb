@@ -1,0 +1,24 @@
+<h1>New Comic</h1>
+<%= form_for @comic do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div>
+    <%= f.label :issue_number %>
+    <%= f.number_field :issue_number %>
+  </div>
+  <div>
+    <%= f.label :publisher %>
+    <%= f.text_field :publisher %>
+  </div>
+  <div>
+    <%= f.label :writer %>
+    <%= f.text_field :writer %>
+  </div>
+  <div>
+    <%= f.label :artist %>
+    <%= f.text_field :artist %>
+  </div>
+  <%= f.submit %>
+<% end %>
