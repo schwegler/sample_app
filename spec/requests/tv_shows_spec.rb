@@ -17,6 +17,15 @@ RSpec.describe 'TvShows', type: :request do
     end
   end
 
+  describe 'GET /tv_shows/:id' do
+    it 'returns http success and displays the title' do
+      tv_show = TvShow.create!(title: 'Breaking Bad')
+      get tv_show_path(tv_show)
+      expect(response).to have_http_status(200)
+      expect(response.body).to include('Breaking Bad')
+    end
+  end
+
   describe 'POST /tv_shows' do
     it 'creates a new tv_show' do
       expect do
