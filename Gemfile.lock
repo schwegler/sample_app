@@ -337,7 +337,7 @@ DEPENDENCIES
   irb (= 1.6.2)
   jbuilder
   jquery-rails
-  kaminari
+  kaminari (~> 1.2)
   pg
   psych (= 5.0.1)
   puma (>= 5.0)

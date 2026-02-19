@@ -52,4 +52,5 @@ end
 gem 'bcrypt', '~> 3.1'
 
 gem 'image_processing', '~> 1.2'
-gem 'kaminari'
+
+gem 'kaminari', '~> 1.2'
