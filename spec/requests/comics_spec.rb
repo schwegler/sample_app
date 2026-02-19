@@ -18,6 +18,20 @@ RSpec.describe 'Comics', type: :request do
       expect(response.body).to include('Amazing Spider-Man')
       expect(response.body).to include('Detective Comics')
     end
+
+    context 'with pagination' do
+      before do
+        Comic.delete_all
+        30.times { |i| Comic.create!(title: "Comic #{i}", issue_number: i, publisher: 'Marvel') }
+      end
+
+      it 'paginates the results' do
+        get comics_path
+        expect(response).to have_http_status(200)
+        expect(response.body).to include('Comic 0')
+        expect(response.body).to include('class="pagination"')
+      end
+    end
   end
 
   describe 'GET /comics/new' do
