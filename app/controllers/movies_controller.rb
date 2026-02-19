@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 class MoviesController < InventoryController
-  def index
-    @movies = Movie.page(params[:page])
-  end
-
   private
 
   def movie_params
