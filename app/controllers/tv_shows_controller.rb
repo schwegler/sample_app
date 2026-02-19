@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class TvShowsController < InventoryController
+  def index
+    @tv_shows = TvShow.page(params[:page])
+  end
+
   private
 
   def tv_show_params
