@@ -8,7 +8,7 @@ RSpec.describe 'User pages', type: :request do # rubocop:disable Metrics/BlockLe
                  password_confirmation: 'password')
   end
 
-  describe 'index' do
+  describe 'index' do # rubocop:disable Metrics/BlockLength
     context 'when not logged in' do
       it 'redirects to login' do
         get users_path
