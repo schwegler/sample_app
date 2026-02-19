@@ -25,7 +25,7 @@ RSpec.describe 'Movies', type: :request do
         expect do
           post movies_path, params: { movie: { title: '' } }
         end.not_to change(Movie, :count)
-        expect(response).to have_http_status(:ok)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to include('New Movie')
       end
     end
