@@ -5,6 +5,10 @@ class TvShowsController < InventoryController
     @tv_shows = TvShow.page(params[:page])
   end
 
+  def new
+    @tv_show = TvShow.new
+  end
+
   private
 
   def tv_show_params
