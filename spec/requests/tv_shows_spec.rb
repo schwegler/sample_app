@@ -8,6 +8,13 @@ RSpec.describe 'TvShows', type: :request do
       get tv_shows_path
       expect(response).to have_http_status(200)
     end
+
+    it 'displays pagination' do
+      26.times { |i| TvShow.create!(title: "Show #{i}", season: 1, episode: 1, network: 'Net') }
+      get tv_shows_path
+      expect(response).to have_http_status(200)
+      expect(response.body).to include('page=2')
+    end
   end
 
   describe 'GET /tv_shows/new' do

@@ -8,3 +8,7 @@ AllCops:
     - 'vendor/**/*'
     - 'bin/**/*'
     - 'node_modules/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/requests/movies_spec.rb'
