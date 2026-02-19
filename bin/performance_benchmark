@@ -1,0 +1,48 @@
+# frozen_string_literal: true
+
+require 'benchmark'
+
+class BenchmarkComics
+  def self.run
+    puts "Checking database..."
+    if Comic.count < 10_000
+      puts "Seeding 10,000 comics..."
+      comics = []
+      10_000.times do |i|
+        comics << {
+          title: "Comic #{i}",
+          issue_number: i,
+          publisher: "Publisher #{i % 5}",
+          writer: "Writer #{i % 10}",
+          artist: "Artist #{i % 10}",
+          created_at: Time.now,
+          updated_at: Time.now
+        }
+      end
+      Comic.insert_all(comics)
+      puts "Seeding complete."
+    else
+      puts "Database already populated."
+    end
+
+    puts "Running benchmark..."
+    Benchmark.bm(20) do |x|
+      x.report("Load all comics:") do
+        comics = Comic.all.to_a
+        puts "Loaded #{comics.size} comics"
+      end
+
+      x.report("Load page 1 (25 items):") do
+        # Simulating kaminari's page method if available, otherwise just limit
+        if Comic.respond_to?(:page)
+          comics = Comic.page(1).per(25).to_a
+        else
+          comics = Comic.limit(25).to_a
+        end
+        puts "Loaded #{comics.size} comics"
+      end
+    end
+  end
+end
+
+BenchmarkComics.run
