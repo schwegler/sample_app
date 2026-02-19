@@ -1,0 +1,25 @@
+=> Booting Puma
+=> Rails 7.1.6 application starting in development
+=> Run `bin/rails server --help` for more startup options
+Puma starting in single mode...
+* Puma version: 7.2.0 ("On The Corner")
+* Ruby version: ruby 3.2.3 (2024-01-18 revision 52bb2ac0a6) [x86_64-linux-gnu]
+*  Min threads: 0
+*  Max threads: 5
+*  Environment: development
+*          PID: 4657
+* Listening on http://127.0.0.1:3000
+* Listening on http://[::1]:3000
+Use Ctrl-C to stop
+Started GET "/wrestling_events" for ::1 at 2026-02-19 02:59:45 +0000
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by WrestlingEventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering wrestling_events/index.html.erb within layouts/application
+  [1m[36mWrestlingEvent Load (0.3ms)[0m  [1m[34mSELECT "wrestling_events".* FROM "wrestling_events" LIMIT ? OFFSET ?[0m  [["LIMIT", 25], ["OFFSET", 0]]
+  ↳ app/views/wrestling_events/index.html.erb:4
+  [1m[36mWrestlingEvent Count (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "wrestling_events"[0m
+  ↳ app/views/wrestling_events/index.html.erb:9
+  Rendered wrestling_events/index.html.erb within layouts/application (Duration: 25.2ms | Allocations: 13643)
+  Rendered layout layouts/application.html.erb (Duration: 27.5ms | Allocations: 14777)
+Completed 200 OK in 64ms (Views: 29.4ms | ActiveRecord: 2.9ms | Allocations: 28964)

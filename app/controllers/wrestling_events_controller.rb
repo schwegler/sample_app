@@ -3,7 +3,7 @@
 class WrestlingEventsController < InventoryController
   before_action :logged_in_user, only: %i[new create]
   def index
-    @wrestling_events = WrestlingEvent.all
+    @wrestling_events = WrestlingEvent.page(params[:page])
   end
 
   def new
