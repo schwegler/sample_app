@@ -8,7 +8,7 @@ RSpec.describe 'User pages', type: :request do # rubocop:disable Metrics/BlockLe
                  password_confirmation: 'password')
   end
 
-  describe 'index' do
+  describe 'index' do # rubocop:disable Metrics/BlockLength
     context 'when not logged in' do
       it 'redirects to login' do
         get users_path
@@ -48,6 +48,27 @@ RSpec.describe 'User pages', type: :request do # rubocop:disable Metrics/BlockLe
 
       it 'deletes another user' do
         expect { delete user_path(user) }.to change(User, :count).by(-1)
+      end
+    end
+
+    context 'pagination' do
+      before do
+        30.times do |n|
+          User.create!(name: "User #{n}", email: "user-#{n}@example.com", password: 'password',
+                       password_confirmation: 'password')
+        end
+        post login_path, params: { session: { email: user.email, password: user.password } }
+        get users_path
+      end
+
+      it 'lists each user' do
+        User.paginate(page: 1).each do |user|
+          expect(response.body).to include(user.name)
+        end
+      end
+
+      it 'shows pagination links' do
+        expect(response.body).to include('class="pagination"')
       end
     end
   end
