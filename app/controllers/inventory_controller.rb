@@ -2,7 +2,7 @@
 
 class InventoryController < ApplicationController
   def index
-    @resources = resource_class.all
+    @resources = resource_class.page(params[:page])
     instance_variable_set("@#{resource_name.pluralize}", @resources)
   end
 

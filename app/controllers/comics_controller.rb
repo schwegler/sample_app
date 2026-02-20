@@ -3,10 +3,6 @@
 class ComicsController < InventoryController
   before_action :logged_in_user, only: %i[new create]
 
-  def index
-    @comics = Comic.page(params[:page])
-  end
-
   private
 
   def comic_params
