@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-RSpec.describe 'Users index', type: :request do
+RSpec.describe 'Users index', type: :request do # rubocop:disable Metrics/BlockLength
   let!(:user) do
     User.create!(name: 'Example User', email: 'user@example.com', password: 'password',
                  password_confirmation: 'password')
   end
 
-  describe 'GET /users' do
+  describe 'GET /users' do # rubocop:disable Metrics/BlockLength
     context 'when not logged in' do
       it 'redirects to login path' do
         get users_path
