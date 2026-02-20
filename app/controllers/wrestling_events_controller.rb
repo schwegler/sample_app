@@ -2,6 +2,7 @@
 
 class WrestlingEventsController < InventoryController
   before_action :logged_in_user, only: %i[new create]
+
   private
 
   def wrestling_event_params
