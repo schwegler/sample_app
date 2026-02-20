@@ -55,12 +55,22 @@ RSpec.describe 'Movies', type: :request do
 
   describe 'GET /movies/:id' do
     context 'with a valid movie' do
-      let!(:movie) { Movie.create!(title: 'Inception') }
+      let!(:movie) do
+        Movie.create!(
+          title: 'Inception',
+          director: 'Christopher Nolan',
+          release_year: 2010,
+          rating: 'PG-13'
+        )
+      end
 
-      it 'returns a success response and displays the movie title' do
+      it 'returns a success response and displays the movie details' do
         get movie_path(movie)
         expect(response).to have_http_status(:ok)
         expect(response.body).to include('Inception')
+        expect(response.body).to include('Christopher Nolan')
+        expect(response.body).to include('2010')
+        expect(response.body).to include('PG-13')
       end
     end
 
