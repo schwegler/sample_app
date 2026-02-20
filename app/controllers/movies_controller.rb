@@ -5,6 +5,10 @@ class MoviesController < InventoryController
     @movies = Movie.page(params[:page])
   end
 
+  def show
+    @movie = Movie.find(params[:id])
+  end
+
   private
 
   def movie_params
