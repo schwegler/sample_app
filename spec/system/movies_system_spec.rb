@@ -8,7 +8,9 @@ RSpec.describe 'Movies Management', type: :system do
   end
 
   context 'when logged in' do
-    let(:user) { User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password') }
+    let(:user) do
+      User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+    end
 
     before do
       visit login_path
