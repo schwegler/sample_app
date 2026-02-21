@@ -33,7 +33,9 @@ RSpec.describe 'Movies', type: :request do
   end
 
   describe 'POST /movies' do
-    let(:user) { User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password') }
+    let(:user) do
+      User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+    end
 
     context 'when not logged in' do
       it 'redirects to login' do

@@ -28,7 +28,8 @@ RSpec.describe 'TvShows', type: :request do
 
     context 'when logged in' do
       before do
-        user = User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+        user = User.create!(name: 'Test User', email: 'test@example.com', password: 'password',
+                            password_confirmation: 'password')
         post login_path, params: { session: { email: user.email, password: user.password } }
       end
 
@@ -54,7 +55,9 @@ RSpec.describe 'TvShows', type: :request do
   end
 
   describe 'POST /tv_shows' do
-    let(:user) { User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password') }
+    let(:user) do
+      User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+    end
 
     context 'when not logged in' do
       it 'redirects to login' do
