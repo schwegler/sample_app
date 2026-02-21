@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AlbumsController < InventoryController
-
   private
 
   def album_params

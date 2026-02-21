@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class WrestlingEventsController < InventoryController
-
   private
 
   def wrestling_event_params
