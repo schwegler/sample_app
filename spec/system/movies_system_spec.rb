@@ -8,6 +8,13 @@ RSpec.describe 'Movies Management', type: :system do
   end
 
   it 'enables me to create a movie' do
+    user = User.create!(name: 'Test User', email: 'test@example.com', password: 'password',
+                        password_confirmation: 'password')
+    visit login_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_button 'Log in'
+
     visit new_movie_path
 
     fill_in 'Title', with: 'Inception'

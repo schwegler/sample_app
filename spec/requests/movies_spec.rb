@@ -33,22 +33,39 @@ RSpec.describe 'Movies', type: :request do
   end
 
   describe 'POST /movies' do
-    context 'with valid parameters' do
-      it 'creates a new movie' do
-        expect do
-          post movies_path, params: { movie: { title: 'New Movie' } }
-        end.to change(Movie, :count).by(1)
-        expect(response).to redirect_to(Movie.last)
+    let(:user) do
+      User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+    end
+
+    context 'when not logged in' do
+      it 'redirects to login' do
+        post movies_path, params: { movie: { title: 'New Movie' } }
+        expect(response).to redirect_to(login_path)
       end
     end
 
-    context 'with invalid parameters' do
-      it 'does not create a new movie' do
-        expect do
-          post movies_path, params: { movie: { title: '' } }
-        end.not_to change(Movie, :count)
-        expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to include('New Movie')
+    context 'when logged in' do
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      context 'with valid parameters' do
+        it 'creates a new movie' do
+          expect do
+            post movies_path, params: { movie: { title: 'New Movie' } }
+          end.to change(Movie, :count).by(1)
+          expect(response).to redirect_to(Movie.last)
+        end
+      end
+
+      context 'with invalid parameters' do
+        it 'does not create a new movie' do
+          expect do
+            post movies_path, params: { movie: { title: '' } }
+          end.not_to change(Movie, :count)
+          expect(response).to have_http_status(:unprocessable_content)
+          expect(response.body).to include('New Movie')
+        end
       end
     end
   end

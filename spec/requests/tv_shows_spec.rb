@@ -19,14 +19,29 @@ RSpec.describe 'TvShows', type: :request do
   end
 
   describe 'GET /tv_shows/new' do
-    it 'returns http success' do
-      get new_tv_show_path
-      expect(response).to have_http_status(200)
-      expect(response.body).to include('New TV Show')
-      expect(response.body).to include('name="tv_show[title]"')
-      expect(response.body).to include('name="tv_show[season]"')
-      expect(response.body).to include('name="tv_show[episode]"')
-      expect(response.body).to include('name="tv_show[network]"')
+    context 'when not logged in' do
+      it 'redirects to login' do
+        get new_tv_show_path
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context 'when logged in' do
+      before do
+        user = User.create!(name: 'Test User', email: 'test@example.com', password: 'password',
+                            password_confirmation: 'password')
+        post login_path, params: { session: { email: user.email, password: user.password } }
+      end
+
+      it 'returns http success' do
+        get new_tv_show_path
+        expect(response).to have_http_status(200)
+        expect(response.body).to include('New TV Show')
+        expect(response.body).to include('name="tv_show[title]"')
+        expect(response.body).to include('name="tv_show[season]"')
+        expect(response.body).to include('name="tv_show[episode]"')
+        expect(response.body).to include('name="tv_show[network]"')
+      end
     end
   end
 
@@ -40,23 +55,40 @@ RSpec.describe 'TvShows', type: :request do
   end
 
   describe 'POST /tv_shows' do
-    it 'creates a new tv_show' do
-      expect do
-        post tv_shows_path, params: { tv_show: { title: 'New Show' } }
-      end.to change(TvShow, :count).by(1)
-      expect(response).to redirect_to(TvShow.last)
+    let(:user) do
+      User.create!(name: 'Test User', email: 'test@example.com', password: 'password', password_confirmation: 'password')
     end
 
-    context 'with invalid parameters' do
-      it 'does not create a new TvShow' do
-        expect do
-          post tv_shows_path, params: { tv_show: { title: '' } }
-        end.to_not change(TvShow, :count)
+    context 'when not logged in' do
+      it 'redirects to login' do
+        post tv_shows_path, params: { tv_show: { title: 'New Show' } }
+        expect(response).to redirect_to(login_path)
+      end
+    end
+
+    context 'when logged in' do
+      before do
+        post login_path, params: { session: { email: user.email, password: user.password } }
       end
 
-      it 'renders a response with 422 status' do
-        post tv_shows_path, params: { tv_show: { title: '' } }
-        expect(response).to have_http_status(:unprocessable_content)
+      it 'creates a new tv_show' do
+        expect do
+          post tv_shows_path, params: { tv_show: { title: 'New Show' } }
+        end.to change(TvShow, :count).by(1)
+        expect(response).to redirect_to(TvShow.last)
+      end
+
+      context 'with invalid parameters' do
+        it 'does not create a new TvShow' do
+          expect do
+            post tv_shows_path, params: { tv_show: { title: '' } }
+          end.to_not change(TvShow, :count)
+        end
+
+        it 'renders a response with 422 status' do
+          post tv_shows_path, params: { tv_show: { title: '' } }
+          expect(response).to have_http_status(:unprocessable_content)
+        end
       end
     end
   end
